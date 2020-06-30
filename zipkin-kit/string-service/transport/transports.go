@@ -3,6 +3,7 @@ package transport
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/tracing/zipkin"
 	"github.com/go-kit/kit/transport"
@@ -13,6 +14,8 @@ import (
 	"net/http"
 	"trace/zipkin-kit/string-service/endpoint"
 )
+
+var ErrorBadRequest = errors.New("invalid request parameter")
 
 func MakeHttpHandler(ctx context.Context, endpoints endpoint.StringEndpoints, zipkintracer *gozipkin.Tracer, logger log.Logger) http.Handler {
 	r := mux.NewRouter()
